@@ -19,11 +19,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={GeistSans.className}>
         <NextUIProvider>
+          <main className="dark text-foreground bg-background">
             <AntdRegistry>
               <Wrapper>
                 <SideBarLayout>{children}</SideBarLayout>
               </Wrapper>
             </AntdRegistry>
+          </main>
         </NextUIProvider>
       </body>
     </html>

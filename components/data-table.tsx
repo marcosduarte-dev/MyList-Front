@@ -1,84 +1,127 @@
-"use client"
+"use client";
 
+import { Collumns } from "@/types";
 import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
-
-import {
+  Chip,
+  ChipProps,
   Table,
   TableBody,
   TableCell,
-  TableHead,
+  TableColumn,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+  Tooltip,
+} from "@nextui-org/react";
+import React, { useEffect } from "react";
+import { DeleteIcon } from "../public/DeleteIcon";
+import { EditIcon } from "../public/EditIcon";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
-}
+const statusColorMap: Record<string, ChipProps["color"]> = {
+  Ativo: "success",
+  Inativo: "danger",
+};
 
-export function DataTable<TData, TValue>({
+const DataTable = ({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  })
+  onEdit,
+  onDelete,
+}: {
+  columns: Collumns[];
+  data: any[];
+  onEdit: Function;
+  onDelete: Function;
+}) => {
+  const [editId, setEditId] = React.useState();
+  const [deleteId, setDeleteId] = React.useState();
 
-  if(table.getRowModel().rows?.length == 0) {
-    table.reset()
-  }
+  const renderCell = React.useCallback((obj: any, columnKey: React.Key) => {
+    const cellValue = obj[columnKey as keyof any];
+
+    switch (columnKey) {
+      case "status":
+        return (
+          <Chip
+            className="capitalize"
+            color={statusColorMap[obj.status]}
+            size="sm"
+            variant="flat"
+          >
+            {cellValue}
+          </Chip>
+        );
+      case "ações":
+        return (
+          <div className="relative flex items-center gap-2 justify-center">
+            {/* <Tooltip content="Details">
+              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                <EyeIcon />
+              </span>
+            </Tooltip> */}
+            <Tooltip color="secondary" content="Editar">
+              <span
+                onClick={() => setEditId(obj.id)}
+                className="text-lg cursor-pointer active:opacity-50"
+              >
+                <EditIcon />
+              </span>
+            </Tooltip>
+            <Tooltip color="danger" content="Deletar">
+              <span
+                onClick={() => setDeleteId(obj.id)}
+                className="text-lg text-danger cursor-pointer active:opacity-50"
+              >
+                <DeleteIcon />
+              </span>
+            </Tooltip>
+          </div>
+        );
+      default:
+        return cellValue;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (editId) onEdit(editId);
+    setEditId(undefined);
+  }, [onEdit, editId]);
+
+  useEffect(() => {
+    if (deleteId) onDelete(deleteId);
+    setDeleteId(undefined);
+  }, [onDelete, deleteId]);
 
   return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                )
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+    <Table
+      selectionMode="single"
+      aria-label="tipos"
+      //selectedKeys={selectedKeys}
+      //onSelectionChange={() => setSelectedKeys}
+    >
+      <TableHeader columns={columns}>
+        {(column) => (
+          <TableColumn
+            key={column.key}
+            align={column.key === "ações" ? "center" : "start"}
+          >
+            {column.title}
+          </TableColumn>
+        )}
+      </TableHeader>
+
+      <TableBody items={data}>
+        {(item) => (
+          <TableRow key={item?.id}>
+            {(columnKey) => (
+              <TableCell align="center">
+                {renderCell(item, columnKey)}
               </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
-  )
-}
+            )}
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
+  );
+};
+
+export default DataTable;
