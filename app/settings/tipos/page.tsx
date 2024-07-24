@@ -1,6 +1,6 @@
 import React from "react";
 import { ContentLayout } from "@/components/sidebar/content-layout";
-import { Table } from "antd";
+//import { Table } from "antd";
 import TiposModal from "./tiposModal";
 import { tipoColumns } from './columns'
 import { TiposModel } from "@/types";
@@ -16,7 +16,7 @@ const TiposProvider = async () => {
 
   return (
     <ContentLayout title="Tipos">
-      <Table columns={tipoColumns} dataSource={data} rowKey="id"/>
+      {/* <Table columns={tipoColumns} dataSource={data} rowKey="id"/> */}
       <TiposModal />
     </ContentLayout>
   );
