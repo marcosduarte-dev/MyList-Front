@@ -1,6 +1,6 @@
 "use client";
 
-import { Collumns } from "@/types";
+import { DataTableProps } from "@/types";
 import {
   Chip,
   ChipProps,
@@ -21,17 +21,7 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
   Inativo: "danger",
 };
 
-const DataTable = ({
-  columns,
-  data,
-  onEdit,
-  onDelete,
-}: {
-  columns: Collumns[];
-  data: any[];
-  onEdit: Function;
-  onDelete: Function;
-}) => {
+const DataTable = ({ columns, data, onEdit, onDelete }: DataTableProps) => {
   const [editId, setEditId] = React.useState();
   const [deleteId, setDeleteId] = React.useState();
 
@@ -92,12 +82,7 @@ const DataTable = ({
   }, [onDelete, deleteId]);
 
   return (
-    <Table
-      selectionMode="single"
-      aria-label="tipos"
-      //selectedKeys={selectedKeys}
-      //onSelectionChange={() => setSelectedKeys}
-    >
+    <Table selectionMode="single" aria-label="tipos">
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn

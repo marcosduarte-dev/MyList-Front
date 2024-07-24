@@ -33,10 +33,19 @@ declare type SidebarToggleProps = {
   setIsOpen?: () => void;
 };
 
+// ===================================== Geral
+
 declare type Collumns = {
   title: string;
   dataIndex: string;
   key: string;
+};
+
+declare type DataTableProps = {
+  columns: Collumns[];
+  data: any[];
+  onEdit: Function;
+  onDelete: Function;
 };
 
 // ===================================== Models API MyList
