@@ -1,16 +1,24 @@
-import { ColumnDef } from "@tanstack/react-table"
-import { TiposModel } from "../../../types"
-import type { TableProps } from 'antd';
- 
-export const tipoColumns: TableProps<TiposModel>['columns'] = [
+import { Collumns } from "../../../types";
+
+export const tipoColumns: Collumns[] = [
   {
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id',
+    title: "ID",
+    dataIndex: "id",
+    key: "id",
   },
   {
-    title: 'Tipo',
-    dataIndex: 'tipo',
-    key: 'tipo',
+    title: "Tipo",
+    dataIndex: "tipo",
+    key: "tipo",
   },
-]
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+  },
+  {
+    title: "Ações",
+    dataIndex: "ações",
+    key: "ações",
+  },
+];
