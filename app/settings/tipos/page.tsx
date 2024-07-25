@@ -2,10 +2,10 @@ import React from "react";
 import { ContentLayout } from "@/components/sidebar/content-layout";
 import TiposModal from "./tiposModal";
 import { TiposModel } from "@/types";
-import { tipos } from "@/types/testes";
+import { getTipos } from "@/service/actions/tiposService";
 
 async function getData(): Promise<TiposModel[]> {
-  return tipos;
+  return await getTipos();
 }
 
 const TiposProvider = async () => {

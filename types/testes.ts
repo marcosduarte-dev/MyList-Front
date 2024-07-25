@@ -11,4 +11,9 @@ export const tipos: TiposModel[] = [
     tipo: "Filmes",
     status: "Ativo",
   },
+  {
+    id: "3",
+    tipo: "Anime",
+    status: "Inativo",
+  },
 ];

@@ -15,6 +15,7 @@ import {
 import React, { useEffect } from "react";
 import { DeleteIcon } from "../public/DeleteIcon";
 import { EditIcon } from "../public/EditIcon";
+import { useToast } from "./ui/use-toast";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   Ativo: "success",
@@ -24,6 +25,8 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
 const DataTable = ({ columns, data, onEdit, onDelete }: DataTableProps) => {
   const [editId, setEditId] = React.useState();
   const [deleteId, setDeleteId] = React.useState();
+
+  const { toast } = useToast();
 
   const renderCell = React.useCallback((obj: any, columnKey: React.Key) => {
     const cellValue = obj[columnKey as keyof any];
@@ -50,7 +53,7 @@ const DataTable = ({ columns, data, onEdit, onDelete }: DataTableProps) => {
             </Tooltip> */}
             <Tooltip color="secondary" content="Editar">
               <span
-                onClick={() => setEditId(obj.id)}
+                onClick={() => setEditId(obj)}
                 className="text-lg cursor-pointer active:opacity-50"
               >
                 <EditIcon />
@@ -80,6 +83,15 @@ const DataTable = ({ columns, data, onEdit, onDelete }: DataTableProps) => {
     if (deleteId) onDelete(deleteId);
     setDeleteId(undefined);
   }, [onDelete, deleteId]);
+
+  useEffect(() => {
+    if (data.length === 0) {
+      toast({
+        title: "Erro",
+        description: "Houve um problema em listar os tipos",
+      });
+    }
+  }, []);
 
   return (
     <Table selectionMode="single" aria-label="tipos">
