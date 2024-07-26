@@ -5,7 +5,11 @@ import {
   Bookmark,
   SquarePen,
   LayoutGrid,
-  LucideIcon
+  LucideIcon,
+  Earth,
+  SquareStack,
+  ArrowBigUp,
+  ShieldMinus,
 } from "lucide-react";
 
 type Submenu = {
@@ -18,7 +22,7 @@ type Menu = {
   href: string;
   label: string;
   active: boolean;
-  icon: LucideIcon
+  icon: LucideIcon;
   submenus: Submenu[];
 };
 
@@ -37,9 +41,9 @@ export function getMenuList(pathname: string): Group[] {
           label: "Dashboard",
           active: pathname.includes("/dashboard"),
           icon: LayoutGrid,
-          submenus: []
-        }
-      ]
+          submenus: [],
+        },
+      ],
     },
     {
       groupLabel: "Contents",
@@ -53,30 +57,30 @@ export function getMenuList(pathname: string): Group[] {
             {
               href: "/posts",
               label: "All Posts",
-              active: pathname === "/posts"
+              active: pathname === "/posts",
             },
             {
               href: "/posts/new",
               label: "New Post",
-              active: pathname === "/posts/new"
-            }
-          ]
+              active: pathname === "/posts/new",
+            },
+          ],
         },
         {
           href: "/categories",
           label: "Categories",
           active: pathname.includes("/categories"),
           icon: Bookmark,
-          submenus: []
+          submenus: [],
         },
         {
           href: "/tags",
           label: "Tags",
           active: pathname.includes("/tags"),
           icon: Tag,
-          submenus: []
-        }
-      ]
+          submenus: [],
+        },
+      ],
     },
     {
       groupLabel: "Configurações",
@@ -85,17 +89,31 @@ export function getMenuList(pathname: string): Group[] {
           href: "/settings/tipos",
           label: "Tipos",
           active: pathname.includes("/settings/tipos"),
-          icon: Users,
-          submenus: []
+          icon: SquareStack,
+          submenus: [],
         },
         {
-          href: "/account",
-          label: "Account",
-          active: pathname.includes("/account"),
-          icon: Settings,
-          submenus: []
-        }
-      ]
-    }
+          href: "/settings/status",
+          label: "Status",
+          active: pathname.includes("/settings/status"),
+          icon: ShieldMinus,
+          submenus: [],
+        },
+        {
+          href: "/settings/pais",
+          label: "Pais",
+          active: pathname.includes("/settings/pais"),
+          icon: Earth,
+          submenus: [],
+        },
+        {
+          href: "/settings/apiconsumida",
+          label: "Api Consumida",
+          active: pathname.includes("/settings/apiconsumida"),
+          icon: ArrowBigUp,
+          submenus: [],
+        },
+      ],
+    },
   ];
 }

@@ -1,17 +1,17 @@
-import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
-import { useStore } from '@/hooks/use-store';
-import { cn } from '@/lib/utils';
-import React from 'react'
-import { SidebarToggle } from './sidebar-toggle';
-import { Button } from '../ui/button';
-import Link from "next/link"
+import { useSidebarToggle } from "@/hooks/use-sidebar-toggle";
+import { useStore } from "@/hooks/use-store";
+import { cn } from "@/lib/utils";
+import React from "react";
+import { SidebarToggle } from "./sidebar-toggle";
+import { Button } from "../ui/button";
+import Link from "next/link";
 import { PanelsTopLeft } from "lucide-react";
-import { Menu } from './menu';
+import { Menu } from "./menu";
 
 const Sidebar = () => {
   const sidebar = useStore(useSidebarToggle, (state) => state);
 
-  if(!sidebar) return null;
+  if (!sidebar) return null;
 
   return (
     <aside
@@ -21,7 +21,7 @@ const Sidebar = () => {
       )}
     >
       <SidebarToggle isOpen={sidebar?.isOpen} setIsOpen={sidebar?.setIsOpen} />
-      <div className="relative h-full flex flex-col px-3 py-4 overflow-y-auto shadow-md dark:shadow-zinc-800">
+      <div className="relative h-full flex flex-col px-3 py-3 overflow-y-auto shadow-md dark:shadow-zinc-800">
         <Button
           className={cn(
             "transition-transform ease-in-out duration-300 mb-1",
@@ -47,7 +47,7 @@ const Sidebar = () => {
         <Menu isOpen={sidebar?.isOpen} />
       </div>
     </aside>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
