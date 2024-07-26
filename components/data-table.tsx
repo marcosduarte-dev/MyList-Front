@@ -88,13 +88,13 @@ const DataTable = ({ columns, data, onEdit, onDelete }: DataTableProps) => {
     if (data.length === 0) {
       toast({
         title: "Erro",
-        description: "Houve um problema em listar os tipos",
+        description: "Houve um problema em listar os dados",
       });
     }
   }, []);
 
   return (
-    <Table selectionMode="single" aria-label="tipos">
+    <Table selectionMode="single" aria-label="dados">
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn

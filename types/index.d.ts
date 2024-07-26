@@ -55,3 +55,9 @@ declare type TiposModel = {
   tipo: string;
   status?: string;
 };
+
+declare type StatusModel = {
+  id: string;
+  status: string;
+  statusAtivo?: string;
+};
