@@ -18,8 +18,8 @@ import { EditIcon } from "../public/EditIcon";
 import { useToast } from "./ui/use-toast";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
-  Ativo: "success",
-  Inativo: "danger",
+  true: "success",
+  false: "danger",
 };
 
 const DataTable = ({ columns, data, onEdit, onDelete }: DataTableProps) => {
@@ -32,15 +32,15 @@ const DataTable = ({ columns, data, onEdit, onDelete }: DataTableProps) => {
     const cellValue = obj[columnKey as keyof any];
 
     switch (columnKey) {
-      case "status":
+      case "ativo":
         return (
           <Chip
             className="capitalize"
-            color={statusColorMap[obj.status]}
+            color={statusColorMap[obj.ativo]}
             size="sm"
             variant="flat"
           >
-            {cellValue}
+            {cellValue ? "Ativo" : "Inativo"}
           </Chip>
         );
       case "ações":

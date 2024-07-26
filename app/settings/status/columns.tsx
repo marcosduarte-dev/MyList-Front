@@ -12,9 +12,9 @@ export const statusColumns: Collumns[] = [
     key: "status",
   },
   {
-    title: "Status Ativo",
-    dataIndex: "statusAtivo",
-    key: "statusAtivo",
+    title: "Ativo",
+    dataIndex: "ativo",
+    key: "ativo",
   },
   {
     title: "Ações",

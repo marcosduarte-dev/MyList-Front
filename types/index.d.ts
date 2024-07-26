@@ -53,11 +53,18 @@ declare type DataTableProps = {
 declare type TiposModel = {
   id: string;
   tipo: string;
-  status?: string;
+  ativo?: string;
 };
 
 declare type StatusModel = {
   id: string;
   status: string;
-  statusAtivo?: string;
+  ativo?: string;
+};
+
+declare type PaisModel = {
+  id: string;
+  nome: string;
+  sigla: string;
+  ativo: string;
 };

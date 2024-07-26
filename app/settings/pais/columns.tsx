@@ -1,15 +1,20 @@
 import { Collumns } from "../../../types";
 
-export const tipoColumns: Collumns[] = [
+export const paisColumns: Collumns[] = [
   {
     title: "ID",
     dataIndex: "id",
     key: "id",
   },
   {
-    title: "Tipo",
-    dataIndex: "tipo",
-    key: "tipo",
+    title: "Nome",
+    dataIndex: "nome",
+    key: "nome",
+  },
+  {
+    title: "Sigla",
+    dataIndex: "sigla",
+    key: "sigla",
   },
   {
     title: "Ativo",
