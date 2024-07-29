@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Sidebar from "@/components/sidebar/Siderbar";
 import { useSidebarToggle } from "@/hooks/use-sidebar-toggle";

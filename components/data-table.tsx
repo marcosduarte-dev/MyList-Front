@@ -43,6 +43,17 @@ const DataTable = ({ columns, data, onEdit, onDelete }: DataTableProps) => {
             {cellValue ? "Ativo" : "Inativo"}
           </Chip>
         );
+      case "color":
+        return (
+          <Chip
+            className="capitalize"
+            style={{ backgroundColor: obj.color }}
+            size="sm"
+            variant="flat"
+          >
+            {cellValue}
+          </Chip>
+        );
       case "ações":
         return (
           <div className="relative flex items-center gap-2 justify-center">

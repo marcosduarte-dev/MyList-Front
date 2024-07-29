@@ -22,6 +22,7 @@ import {
 } from "@/service/actions/paisService";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { ColorPicker } from "antd";
 
 const PaisModal = ({ data }: { data: PaisModel[] }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -96,6 +97,7 @@ const PaisModal = ({ data }: { data: PaisModel[] }) => {
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
+        isDismissable={false}
         placement="top-center"
         onClose={() => setPais({} as PaisModel)}
         classNames={{
@@ -128,6 +130,14 @@ const PaisModal = ({ data }: { data: PaisModel[] }) => {
                   variant="bordered"
                   value={pais.sigla}
                   onChange={(e) => setPais({ ...pais, sigla: e.target.value })}
+                />
+                <ColorPicker
+                  value={pais.color}
+                  defaultValue="#1677ff"
+                  onChange={(color) =>
+                    setPais({ ...pais, color: color.toHexString() })
+                  }
+                  showText
                 />
               </ModalBody>
               <ModalFooter>

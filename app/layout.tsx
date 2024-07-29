@@ -17,17 +17,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="dark text-foreground">
       <body className={GeistSans.className}>
         <NextUIProvider>
-          <main className="dark text-foreground bg-background">
-            <AntdRegistry>
-              <Wrapper>
-                <SideBarLayout>{children}</SideBarLayout>
-                <Toaster />
-              </Wrapper>
-            </AntdRegistry>
-          </main>
+          <AntdRegistry>
+            <Wrapper>
+              <SideBarLayout>{children}</SideBarLayout>
+              <Toaster />
+            </Wrapper>
+          </AntdRegistry>
         </NextUIProvider>
       </body>
     </html>

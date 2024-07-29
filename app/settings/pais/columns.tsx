@@ -17,6 +17,11 @@ export const paisColumns: Collumns[] = [
     key: "sigla",
   },
   {
+    title: "Cor",
+    dataIndex: "color",
+    key: "color",
+  },
+  {
     title: "Ativo",
     dataIndex: "ativo",
     key: "ativo",

@@ -48,18 +48,28 @@ declare type DataTableProps = {
   onDelete: Function;
 };
 
+declare type HomePageProps = {
+  status: StatusModel[];
+};
+
+export type IconSvgProps = SVGProps<SVGSVGElement> & {
+  size?: number;
+};
+
 // ===================================== Models API MyList
 
 declare type TiposModel = {
   id: string;
   tipo: string;
   ativo?: string;
+  color: string;
 };
 
 declare type StatusModel = {
   id: string;
   status: string;
   ativo?: string;
+  color: string;
 };
 
 declare type PaisModel = {
@@ -67,4 +77,5 @@ declare type PaisModel = {
   nome: string;
   sigla: string;
   ativo: string;
+  color: string;
 };

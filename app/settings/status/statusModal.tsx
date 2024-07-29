@@ -22,6 +22,7 @@ import {
 } from "@/service/actions/statusService";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { ColorPicker } from "antd";
 
 const StatusModal = ({ data }: { data: StatusModel[] }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -95,6 +96,7 @@ const StatusModal = ({ data }: { data: StatusModel[] }) => {
 
       <Modal
         isOpen={isOpen}
+        isDismissable={false}
         onOpenChange={onOpenChange}
         placement="top-center"
         onClose={() => setStatus({} as StatusModel)}
@@ -123,6 +125,14 @@ const StatusModal = ({ data }: { data: StatusModel[] }) => {
                   onChange={(e) =>
                     setStatus({ ...status, status: e.target.value })
                   }
+                />
+                <ColorPicker
+                  value={status.color}
+                  defaultValue="#1677ff"
+                  onChange={(color) =>
+                    setStatus({ ...status, color: color.toHexString() })
+                  }
+                  showText
                 />
               </ModalBody>
               <ModalFooter>

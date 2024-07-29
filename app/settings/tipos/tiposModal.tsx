@@ -22,6 +22,7 @@ import {
 } from "@/service/actions/tiposService";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { ColorPicker } from "antd";
 
 const TiposModal = ({ data }: { data: TiposModel[] }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -96,6 +97,7 @@ const TiposModal = ({ data }: { data: TiposModel[] }) => {
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
+        isDismissable={false}
         placement="top-center"
         onClose={() => setTipo({} as TiposModel)}
         classNames={{
@@ -121,6 +123,14 @@ const TiposModal = ({ data }: { data: TiposModel[] }) => {
                   variant="bordered"
                   value={tipo.tipo}
                   onChange={(e) => setTipo({ ...tipo, tipo: e.target.value })}
+                />
+                <ColorPicker
+                  value={tipo.color}
+                  defaultValue="#1677ff"
+                  onChange={(color) =>
+                    setTipo({ ...tipo, color: color.toHexString() })
+                  }
+                  showText
                 />
               </ModalBody>
               <ModalFooter>
