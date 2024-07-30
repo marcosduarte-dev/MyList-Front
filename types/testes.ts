@@ -7,11 +7,11 @@ const columns = [
   { name: "PAIS", uid: "pais", sortable: true },
   { name: "STATUS", uid: "status" },
   { name: "TEMPORADAS", uid: "temporadas" },
-  { name: "TOTAL EPISODIOS", uid: "totalEpisodio", sortable: true },
-  { name: "EPISODIOS ASSISTIDOS", uid: "espisodioAssistido" },
-  { name: "RATING", uid: "rating" },
+  { name: "TOTAL EPISODIOS", uid: "totalEpisodios", sortable: true },
+  { name: "EPISODIOS ASSISTIDOS", uid: "episodiosAssistidos", sortable: true },
+  { name: "RATING", uid: "rating", sortable: true },
   { name: "COMENTARIOS", uid: "comentarios" },
-  { name: "DATA INICIO", uid: "dataInicio" },
+  { name: "DATA INICIO", uid: "dataComeco" },
   { name: "DATA FINAL", uid: "dataFinal" },
 ];
 

@@ -50,6 +50,7 @@ declare type DataTableProps = {
 
 declare type HomePageProps = {
   status: StatusModel[];
+  data: RegistroModel[];
 };
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
@@ -78,4 +79,25 @@ declare type PaisModel = {
   sigla: string;
   ativo: string;
   color: string;
+};
+
+declare type RegistroModel = {
+  id: string;
+  lista: object;
+  poster: string;
+  nome: string;
+  sinopse: string;
+  tipo: TiposModel;
+  apiConsumida: object;
+  pais: PaisModel;
+  status: StatusModel;
+  temporadas: number;
+  totalEpisodios: number;
+  episodiosAssistidos: number;
+  rating: number;
+  comentarios: string;
+  dataComeco: Date;
+  dataFinal: Date;
+  dataRegistro: Date;
+  ativo: boolean;
 };

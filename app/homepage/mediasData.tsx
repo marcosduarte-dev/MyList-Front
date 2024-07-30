@@ -5,8 +5,8 @@ import { PlusIcon } from "@/components/icons/PlusIcon";
 import { SearchIcon } from "@/components/icons/SearchIcon";
 import { VerticalDotsIcon } from "@/components/icons/VerticalDotsIcon";
 import { capitalize } from "@/lib/utils";
-import { HomePageProps } from "@/types";
-import { columns, statusOptions, users } from "@/types/testes";
+import { HomePageProps, RegistroModel } from "@/types";
+import { columns } from "@/types/testes";
 import {
   Button,
   Chip,
@@ -34,11 +34,16 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
   vacation: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["titulo", "tipo", "status", "totalEpisodio"];
+const INITIAL_VISIBLE_COLUMNS = [
+  "titulo",
+  "tipo",
+  "status",
+  "pais",
+  "totalEpisodios",
+  "episodiosAssistidos",
+];
 
-type User = (typeof users)[0];
-
-const MediasData = ({ status }: HomePageProps) => {
+const MediasData = ({ status, data }: HomePageProps) => {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
     new Set([])
@@ -49,7 +54,7 @@ const MediasData = ({ status }: HomePageProps) => {
   const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
-    column: "age",
+    column: "titulo",
     direction: "ascending",
   });
 
@@ -66,24 +71,24 @@ const MediasData = ({ status }: HomePageProps) => {
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...users];
+    let filteredRegistros = [...data];
 
     if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase())
+      filteredRegistros = filteredRegistros.filter((obj) =>
+        obj.nome.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
     if (
       statusFilter !== "all" &&
-      Array.from(statusFilter).length !== statusOptions.length
+      Array.from(statusFilter).length !== status.length
     ) {
-      filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status)
+      filteredRegistros = filteredRegistros.filter((registro) =>
+        Array.from(statusFilter).includes(String(registro.status.id))
       );
     }
 
-    return filteredUsers;
-  }, [users, filterValue, statusFilter]);
+    return filteredRegistros;
+  }, [data, filterValue, statusFilter]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -95,70 +100,95 @@ const MediasData = ({ status }: HomePageProps) => {
   }, [page, filteredItems, rowsPerPage]);
 
   const sortedItems = React.useMemo(() => {
-    return [...items].sort((a: User, b: User) => {
-      const first = a[sortDescriptor.column as keyof User] as number;
-      const second = b[sortDescriptor.column as keyof User] as number;
+    return [...items].sort((a: RegistroModel, b: RegistroModel) => {
+      const first = a[sortDescriptor.column as keyof RegistroModel] as number;
+      const second = b[sortDescriptor.column as keyof RegistroModel] as number;
       const cmp = first < second ? -1 : first > second ? 1 : 0;
 
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
   }, [sortDescriptor, items]);
 
-  const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
-    const cellValue = user[columnKey as keyof User];
+  const renderCell = React.useCallback(
+    (registro: RegistroModel, columnKey: React.Key) => {
+      const cellValue = registro[columnKey as keyof RegistroModel];
 
-    switch (columnKey) {
-      case "name":
-        return (
-          <User
-            avatarProps={{ radius: "lg", src: user.avatar }}
-            description={user.email}
-            name={cellValue}
-          >
-            {user.email}
-          </User>
-        );
-      case "role":
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-400">
-              {user.team}
-            </p>
-          </div>
-        );
-      case "status":
-        return (
-          <Chip
-            className="capitalize"
-            color={statusColorMap[user.status]}
-            size="sm"
-            variant="flat"
-          >
-            {cellValue}
-          </Chip>
-        );
-      case "actions":
-        return (
-          <div className="relative flex justify-end items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-        );
-      default:
-        return cellValue;
-    }
-  }, []);
+      switch (columnKey) {
+        case "titulo":
+          return (
+            <User
+              avatarProps={{ radius: "lg", src: registro.poster }}
+              description={"★".repeat(registro.rating)}
+              name={registro.nome}
+            >
+              {registro.nome}
+            </User>
+          );
+        // case "role":
+        //   return (
+        //     <div className="flex flex-col">
+        //       <p className="text-bold text-small capitalize">{cellValue}</p>
+        //       <p className="text-bold text-tiny capitalize text-default-400">
+        //         {registro.team}
+        //       </p>
+        //     </div>
+        //   );
+        case "status":
+          return (
+            <Chip
+              className="capitalize"
+              style={{ backgroundColor: registro.status.color }}
+              size="sm"
+              variant="flat"
+            >
+              {registro.status.status}
+            </Chip>
+          );
+        case "pais":
+          return (
+            <Chip
+              className="capitalize"
+              style={{ backgroundColor: registro.pais.color }}
+              size="sm"
+              variant="flat"
+            >
+              {registro.pais.nome}
+            </Chip>
+          );
+        case "tipo":
+          return (
+            <Chip
+              className="capitalize"
+              style={{ backgroundColor: registro.tipo.color }}
+              size="sm"
+              variant="flat"
+            >
+              {registro.tipo.tipo}
+            </Chip>
+          );
+        case "actions":
+          return (
+            <div className="relative flex justify-end items-center gap-2">
+              <Dropdown>
+                <DropdownTrigger>
+                  <Button isIconOnly size="sm" variant="light">
+                    <VerticalDotsIcon className="text-default-300" />
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu>
+                  <DropdownItem>View</DropdownItem>
+                  <DropdownItem>Edit</DropdownItem>
+                  <DropdownItem>Delete</DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </div>
+          );
+        default:
+          return cellValue;
+      }
+    },
+    []
+  );
 
   const onNextPage = React.useCallback(() => {
     if (page < pages) {
@@ -271,7 +301,7 @@ const MediasData = ({ status }: HomePageProps) => {
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
-            Total {users.length} users
+            Total {data.length} registros
           </span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
@@ -293,7 +323,7 @@ const MediasData = ({ status }: HomePageProps) => {
     visibleColumns,
     onSearchChange,
     onRowsPerPageChange,
-    users.length,
+    data.length,
     hasSearchFilter,
   ]);
 
@@ -364,7 +394,10 @@ const MediasData = ({ status }: HomePageProps) => {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody
+        emptyContent={"Nenhum registro encontrado"}
+        items={sortedItems}
+      >
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
